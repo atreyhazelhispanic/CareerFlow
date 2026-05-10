@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: careerflow-postgres
+    environment:
+      POSTGRES_DB: careerflow
+      POSTGRES_USER: careerflow_user
+      POSTGRES_PASSWORD: careerflow_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - careerflow_pg_data:/var/lib/postgresql/data
+
+volumes:
+  careerflow_pg_data:
