@@ -47,7 +47,7 @@ class JobApplicationServiceTest {
                 ApplicationStatus.APPLIED,
                 LocalDate.of(2026, 5, 3),
                 "Bentonville, AR",
-                "HYBRID",
+                WorkplaceType.HYBRID,
                 "$95k-$130k",
                 "https://careers.walmart.com/example",
                 "Backend Java role"

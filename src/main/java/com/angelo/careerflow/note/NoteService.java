@@ -31,21 +31,21 @@ public class NoteService {
     @Transactional(readOnly = true)
     public List<NoteResponse> getNotes(String applicationId) {
         applicationService.getOwnedApplicationEntity(applicationId);
-        return noteRepository.findAllByApplicationId(applicationId)
+        return noteRepository.findAllByApplication_Id(applicationId)
                 .stream().map(NoteResponse::from).toList();
     }
 
     @Transactional(readOnly = true)
     public NoteResponse getNote(String applicationId, String noteId) {
         applicationService.getOwnedApplicationEntity(applicationId);
-        return noteRepository.findByIdAndApplicationId(noteId, applicationId)
+        return noteRepository.findByIdAndApplication_Id(noteId, applicationId)
                 .map(NoteResponse::from)
                 .orElseThrow(() -> new ResourceNotFoundException("Note not found"));
     }
 
     public void deleteNote(String applicationId, String noteId) {
         applicationService.getOwnedApplicationEntity(applicationId);
-        Note note = noteRepository.findByIdAndApplicationId(noteId, applicationId)
+        Note note = noteRepository.findByIdAndApplication_Id(noteId, applicationId)
                 .orElseThrow(() -> new ResourceNotFoundException("Note not found"));
         noteRepository.delete(note);
     }

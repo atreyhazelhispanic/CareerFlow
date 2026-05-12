@@ -39,21 +39,21 @@ public class InterviewService {
     @Transactional(readOnly = true)
     public List<InterviewResponse> getInterviews(String applicationId) {
         applicationService.getOwnedApplicationEntity(applicationId);
-        return interviewRepository.findAllByApplicationId(applicationId)
+        return interviewRepository.findAllByApplication_Id(applicationId)
                 .stream().map(InterviewResponse::from).toList();
     }
 
     @Transactional(readOnly = true)
     public InterviewResponse getInterview(String applicationId, String interviewId) {
         applicationService.getOwnedApplicationEntity(applicationId);
-        return interviewRepository.findByIdAndApplicationId(interviewId, applicationId)
+        return interviewRepository.findByIdAndApplication_Id(interviewId, applicationId)
                 .map(InterviewResponse::from)
                 .orElseThrow(() -> new ResourceNotFoundException("Interview not found"));
     }
 
     public void deleteInterview(String applicationId, String interviewId) {
         applicationService.getOwnedApplicationEntity(applicationId);
-        Interview interview = interviewRepository.findByIdAndApplicationId(interviewId, applicationId)
+        Interview interview = interviewRepository.findByIdAndApplication_Id(interviewId, applicationId)
                 .orElseThrow(() -> new ResourceNotFoundException("Interview not found"));
         interviewRepository.delete(interview);
     }

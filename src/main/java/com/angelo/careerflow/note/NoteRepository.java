@@ -6,6 +6,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface NoteRepository extends JpaRepository<Note, String> {
-    List<Note> findAllByApplicationId(String applicationId);
-    Optional<Note> findByIdAndApplicationId(String id, String applicationId);
+    List<Note> findAllByApplication_Id(String applicationId);
+    Optional<Note> findByIdAndApplication_Id(String id, String applicationId);
 }

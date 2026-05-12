@@ -1,11 +1,13 @@
 package com.angelo.careerflow.contact;
 
 import jakarta.validation.Valid;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "Contacts", description = "Manage contacts for a job application")
 @RestController
 @RequestMapping("/api/applications/{applicationId}/contacts")
 public class ContactController {

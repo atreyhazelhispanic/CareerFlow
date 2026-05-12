@@ -6,6 +6,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface InterviewRepository extends JpaRepository<Interview, String> {
-    List<Interview> findAllByApplicationId(String applicationId);
-    Optional<Interview> findByIdAndApplicationId(String id, String applicationId);
+    List<Interview> findAllByApplication_Id(String applicationId);
+    Optional<Interview> findByIdAndApplication_Id(String id, String applicationId);
 }

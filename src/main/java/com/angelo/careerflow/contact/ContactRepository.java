@@ -6,6 +6,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ContactRepository extends JpaRepository<Contact, String> {
-    List<Contact> findAllByApplicationId(String applicationId);
-    Optional<Contact> findByIdAndApplicationId(String id, String applicationId);
+    List<Contact> findAllByApplication_Id(String applicationId);
+    Optional<Contact> findByIdAndApplication_Id(String id, String applicationId);
 }

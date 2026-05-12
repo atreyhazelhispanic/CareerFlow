@@ -1,11 +1,13 @@
 package com.angelo.careerflow.application;
 
 import jakarta.validation.Valid;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.*;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "Applications", description = "Manage job applications")
 @RestController
 @RequestMapping("/api/applications")
 public class JobApplicationController {

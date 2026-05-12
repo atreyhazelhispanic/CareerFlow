@@ -25,7 +25,6 @@
 /workspaces/CareerFlow/src/main/java/com/angelo/careerflow/contact/CreateContactRequest.java
 /workspaces/CareerFlow/src/main/java/com/angelo/careerflow/exception/ApiExceptionHandler.java
 /workspaces/CareerFlow/src/main/java/com/angelo/careerflow/exception/ResourceNotFoundException.java
-/workspaces/CareerFlow/src/main/java/com/angelo/careerflow/exception/UnauthorizedResourceAccessException.java
 /workspaces/CareerFlow/src/main/java/com/angelo/careerflow/interview/CreateInterviewRequest.java
 /workspaces/CareerFlow/src/main/java/com/angelo/careerflow/interview/Interview.java
 /workspaces/CareerFlow/src/main/java/com/angelo/careerflow/interview/InterviewController.java

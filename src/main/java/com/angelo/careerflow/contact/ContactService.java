@@ -38,21 +38,21 @@ public class ContactService {
     @Transactional(readOnly = true)
     public List<ContactResponse> getContacts(String applicationId) {
         applicationService.getOwnedApplicationEntity(applicationId);
-        return contactRepository.findAllByApplicationId(applicationId)
+        return contactRepository.findAllByApplication_Id(applicationId)
                 .stream().map(ContactResponse::from).toList();
     }
 
     @Transactional(readOnly = true)
     public ContactResponse getContact(String applicationId, String contactId) {
         applicationService.getOwnedApplicationEntity(applicationId);
-        return contactRepository.findByIdAndApplicationId(contactId, applicationId)
+        return contactRepository.findByIdAndApplication_Id(contactId, applicationId)
                 .map(ContactResponse::from)
                 .orElseThrow(() -> new ResourceNotFoundException("Contact not found"));
     }
 
     public void deleteContact(String applicationId, String contactId) {
         applicationService.getOwnedApplicationEntity(applicationId);
-        Contact contact = contactRepository.findByIdAndApplicationId(contactId, applicationId)
+        Contact contact = contactRepository.findByIdAndApplication_Id(contactId, applicationId)
                 .orElseThrow(() -> new ResourceNotFoundException("Contact not found"));
         contactRepository.delete(contact);
     }
