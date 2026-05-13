@@ -1,0 +1,25 @@
+# Maven build output
+target/
+
+# Frontend build output & dependencies
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# VS Code extension artifacts
+.github/java-upgrade/
+
+# IDE / editor
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+
+# Environment
+.env
+.env.local
+
+# OS
+.DS_Store
+Thumbs.db
