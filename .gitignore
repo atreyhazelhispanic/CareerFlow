@@ -5,6 +5,7 @@ target/
 frontend/node_modules/
 frontend/dist/
 frontend/.vite/
+frontend/*.tsbuildinfo
 
 # VS Code extension artifacts
 .github/java-upgrade/
