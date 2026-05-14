@@ -35,6 +35,7 @@ const EMPTY_FORM = {
 export default function DashboardPage() {
   const navigate = useNavigate();
   const [page, setPage] = useState<Page<JobApplication> | null>(null);
+  const [loadError, setLoadError] = useState('');
   const [currentPage, setCurrentPage] = useState(0);
   const [filterStatus, setFilterStatus] = useState('');
   const [filterCompany, setFilterCompany] = useState('');
@@ -49,11 +50,24 @@ export default function DashboardPage() {
   }, [currentPage, filterStatus, filterCompany]);
 
   async function loadApplications() {
-    const params: Record<string, string | number> = { page: currentPage, size: 20 };
-    if (filterStatus) params.status = filterStatus;
-    if (filterCompany) params.company = filterCompany;
-    const { data } = await client.get<Page<JobApplication>>('/applications', { params });
-    setPage(data);
+    setLoadError('');
+    try {
+      const params: Record<string, string | number> = { page: currentPage, size: 20 };
+      if (filterStatus) params.status = filterStatus;
+      if (filterCompany) params.company = filterCompany;
+      const { data } = await client.get<Page<JobApplication>>('/applications', { params });
+      setPage(data);
+    } catch (err: unknown) {
+      const status =
+        err instanceof Error && 'response' in err
+          ? (err as { response?: { status?: number } }).response?.status
+          : undefined;
+      setLoadError(
+        status === 401 || status === 403
+          ? 'Your session has expired. Please log in again.'
+          : 'Could not load applications. Check your connection and try again.',
+      );
+    }
   }
 
   async function handleCreate(e: FormEvent) {
@@ -87,7 +101,11 @@ export default function DashboardPage() {
 
   async function handleDelete(id: string) {
     if (!confirm('Delete this application and all its interviews, contacts and notes?')) return;
-    await client.delete(`/applications/${id}`);
+    try {
+      await client.delete(`/applications/${id}`);
+    } catch {
+      // deletion errors are rare; re-load to reflect true state either way
+    }
     loadApplications();
   }
 
@@ -181,7 +199,12 @@ export default function DashboardPage() {
       </div>
 
       {/* ── Applications Table ── */}
-      {!page ? (
+      {loadError ? (
+        <div className="alert alert-danger d-flex align-items-center gap-2">
+          <span>{loadError}</span>
+          <button className="btn btn-sm btn-outline-danger ms-auto" onClick={loadApplications}>Retry</button>
+        </div>
+      ) : !page ? (
         <div className="text-center py-5 text-muted">Loading…</div>
       ) : page.content.length === 0 ? (
         <div className="text-center py-5 text-muted">No applications yet. Add one above!</div>

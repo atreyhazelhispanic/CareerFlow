@@ -1,10 +1,12 @@
 import { useState, FormEvent } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import client from '../api/client';
+import { useAuth } from '../context/AuthContext';
 import type { AuthResponse } from '../types';
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -16,7 +18,7 @@ export default function LoginPage() {
     setError('');
     try {
       const { data } = await client.post<AuthResponse>('/auth/login', { email, password });
-      localStorage.setItem('token', data.token);
+      login(data.token);
       navigate('/dashboard');
     } catch (err: unknown) {
       const message =

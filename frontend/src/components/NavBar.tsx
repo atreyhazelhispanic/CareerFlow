@@ -1,21 +1,22 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 export default function NavBar() {
   const navigate = useNavigate();
-  const isLoggedIn = !!localStorage.getItem('token');
+  const { isAuthenticated, logout } = useAuth();
 
   function handleLogout() {
-    localStorage.removeItem('token');
+    logout();
     navigate('/login');
   }
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-4">
-      <Link className="navbar-brand fw-bold" to={isLoggedIn ? '/dashboard' : '/login'}>
+      <Link className="navbar-brand fw-bold" to={isAuthenticated ? '/dashboard' : '/login'}>
         CareerFlow
       </Link>
       <div className="ms-auto d-flex gap-2">
-        {isLoggedIn ? (
+        {isAuthenticated ? (
           <>
             <Link className="btn btn-outline-light btn-sm" to="/dashboard">
               Dashboard

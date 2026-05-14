@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import NavBar from './components/NavBar';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
@@ -6,14 +7,14 @@ import DashboardPage from './pages/DashboardPage';
 import ApplicationDetailPage from './pages/ApplicationDetailPage';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  return localStorage.getItem('token')
-    ? <>{children}</>
-    : <Navigate to="/login" replace />;
+  const { isAuthenticated } = useAuth();
+  return isAuthenticated ? <>{children}</> : <Navigate to="/login" replace />;
 }
 
-export default function App() {
+function AppRoutes() {
+  const { isAuthenticated } = useAuth();
   return (
-    <BrowserRouter>
+    <>
       <NavBar />
       <Routes>
         <Route path="/login" element={<LoginPage />} />
@@ -28,9 +29,19 @@ export default function App() {
         />
         <Route
           path="*"
-          element={<Navigate to={localStorage.getItem('token') ? '/dashboard' : '/login'} replace />}
+          element={<Navigate to={isAuthenticated ? '/dashboard' : '/login'} replace />}
         />
       </Routes>
+    </>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AuthProvider>
+        <AppRoutes />
+      </AuthProvider>
     </BrowserRouter>
   );
 }

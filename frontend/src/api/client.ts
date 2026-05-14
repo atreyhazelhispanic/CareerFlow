@@ -17,7 +17,8 @@ client.interceptors.response.use(
   (err) => {
     if (err.response?.status === 401) {
       localStorage.removeItem('token');
-      window.location.href = '/login';
+      // Dispatch a custom event so AuthContext can react without a hard reload
+      window.dispatchEvent(new Event('auth:logout'));
     }
     return Promise.reject(err);
   }
