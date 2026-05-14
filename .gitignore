@@ -17,8 +17,8 @@ frontend/.vite/
 *.swo
 
 # Environment
-.env
 .env.local
+frontend/.env.local
 
 # OS
 .DS_Store
